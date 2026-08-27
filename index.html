@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Trade Co. — Global Import &amp; Export</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0c1e30;
+    --navy:#0f2438;
+    --navy-light:#1c3a55;
+    --chart:#efe8d8;
+    --chart-line:#d9cfb4;
+    --brass:#b8935a;
+    --brass-bright:#d4ad74;
+    --rust:#a8452f;
+    --rust-bright:#c15638;
+    --teal:#3f6b6b;
+    --ink:#1a1a1a;
+    --text-on-navy:#e9e2d0;
+    --text-muted:#9fb0bf;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy);
+    color:var(--text-on-navy);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    line-height:1.1;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  /* ---------- focus ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--brass-bright);
+    outline-offset:3px;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(12,30,48,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(184,147,90,0.18);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    max-width:1180px; margin:0 auto;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces', serif; font-weight:600; font-size:1.15rem;
+    letter-spacing:0.01em;
+  }
+  .brand .mark{
+    width:30px; height:30px; flex-shrink:0;
+  }
+  .navlinks{ display:flex; gap:34px; font-size:0.92rem; }
+  .navlinks a{ color:var(--text-muted); transition:color .2s; position:relative; }
+  .navlinks a:hover{ color:var(--chart); }
+  .nav-cta{
+    background:var(--rust); color:#fff8ef; padding:10px 20px;
+    border-radius:2px; font-size:0.88rem; font-weight:500;
+    border:1px solid var(--rust-bright);
+    transition:background .2s;
+  }
+  .nav-cta:hover{ background:var(--rust-bright); }
+  .navlinks-mobile-toggle{ display:none; background:none; border:0; color:var(--chart); font-size:1.6rem; cursor:pointer; }
+  @media (max-width:860px){
+    .navlinks{ display:none; }
+    .navlinks-mobile-toggle{ display:block; }
+  }
+
+  /* ---------- hero: trade route chart ---------- */
+  .hero{
+    position:relative;
+    padding:168px 0 90px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(63,107,107,0.25), transparent 55%),
+      radial-gradient(ellipse at 85% 30%, rgba(184,147,90,0.14), transparent 50%),
+      var(--navy);
+  }
+  .hero-grid{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(184,147,90,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184,147,90,0.07) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse at 60% 30%, black 10%, transparent 72%);
+  }
+  .hero-inner{
+    position:relative; z-index:2;
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:48px; align-items:center;
+  }
+  @media (max-width:900px){ .hero-inner{ grid-template-columns:1fr; } }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace; font-size:0.76rem; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--brass-bright);
+    border:1px solid rgba(184,147,90,0.35); border-radius:100px;
+    padding:6px 14px; margin-bottom:26px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--brass-bright); animation:pulse 2s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+  .hero h1{
+    font-size:clamp(2.5rem, 5vw, 3.6rem);
+    color:var(--chart);
+    margin-bottom:22px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--brass-bright); }
+  .hero p.lede{
+    font-size:1.12rem; color:var(--text-muted); max-width:480px; margin-bottom:34px;
+  }
+  .hero-actions{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:44px; }
+  .btn-primary{
+    background:var(--rust); color:#fff8ef; padding:14px 26px;
+    border-radius:2px; font-weight:500; font-size:0.96rem;
+    border:1px solid var(--rust-bright);
+    transition:transform .2s, background .2s;
+    display:inline-block;
+  }
+  .btn-primary:hover{ background:var(--rust-bright); transform:translateY(-1px); }
+  .btn-secondary{
+    padding:14px 26px; border-radius:2px; font-weight:500; font-size:0.96rem;
+    border:1px solid rgba(233,226,208,0.3); color:var(--chart);
+    transition:border-color .2s, background .2s;
+    display:inline-block;
+  }
+  .btn-secondary:hover{ border-color:var(--brass-bright); background:rgba(184,147,90,0.08); }
+
+  .hero-stats{ display:flex; gap:36px; flex-wrap:wrap; }
+  .hstat b{ display:block; font-family:'Fraunces', serif; font-size:1.6rem; color:var(--brass-bright); }
+  .hstat span{ font-size:0.82rem; color:var(--text-muted); }
+
+  /* route map */
+  .route-card{
+    position:relative;
+    background:var(--chart);
+    border-radius:4px;
+    padding:26px 22px 20px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+    border:1px solid var(--chart-line);
+  }
+  .route-card-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:14px; color:var(--navy);
+  }
+  .route-card-head .mono{ font-size:0.72rem; color:var(--teal); letter-spacing:0.06em; }
+  .route-card-head h4{ font-size:0.95rem; color:var(--navy); }
+  svg.route-svg{ width:100%; height:auto; }
+  .route-legend{
+    display:flex; justify-content:space-between; margin-top:12px;
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem; color:var(--teal);
+  }
+
+  /* ---------- section shared ---------- */
+  section{ padding:100px 0; position:relative; }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head .eyebrow{ margin-bottom:18px; }
+  .section-head h2{ font-size:clamp(1.9rem, 3.2vw, 2.5rem); color:var(--chart); }
+  .section-head p{ color:var(--text-muted); margin-top:14px; font-size:1.02rem; }
+  .light-section{ background:var(--chart); color:var(--ink); }
+  .light-section .section-head h2{ color:var(--navy); }
+  .light-section .section-head p{ color:#5a5346; }
+
+  /* ---------- services ---------- */
+  .services-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+    background:rgba(184,147,90,0.18);
+    border:1px solid rgba(184,147,90,0.18);
+  }
+  @media (max-width:860px){ .services-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .services-grid{ grid-template-columns:1fr; } }
+  .service-card{
+    background:var(--navy); padding:34px 28px; transition:background .25s;
+  }
+  .service-card:hover{ background:var(--navy-light); }
+  .service-card .num{ font-family:'JetBrains Mono', monospace; font-size:0.75rem; color:var(--brass); margin-bottom:18px; display:block; }
+  .service-card h3{ font-size:1.18rem; color:var(--chart); margin-bottom:10px; }
+  .service-card p{ font-size:0.92rem; color:var(--text-muted); }
+
+  /* ---------- process (real sequence -> numbered) ---------- */
+  .process{
+    display:flex; flex-direction:column;
+  }
+  .process-step{
+    display:grid; grid-template-columns:90px 1fr; gap:28px;
+    padding:30px 0; border-top:1px solid var(--chart-line);
+  }
+  .process-step:last-child{ border-bottom:1px solid var(--chart-line); }
+  .process-step .step-num{
+    font-family:'Fraunces', serif; font-size:2.2rem; color:var(--brass);
+    font-weight:500;
+  }
+  .process-step h3{ color:var(--navy); font-size:1.2rem; margin-bottom:8px; }
+  .process-step p{ color:#5a5346; font-size:0.96rem; max-width:560px; }
+  .process-step .tag{
+    font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--teal);
+    text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; display:block;
+  }
+
+  /* ---------- industries ---------- */
+  .industries-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;
+  }
+  @media (max-width:860px){ .industries-grid{ grid-template-columns:repeat(2,1fr); } }
+  .industry-tile{
+    border:1px solid rgba(184,147,90,0.22);
+    padding:26px 20px;
+    border-radius:3px;
+    transition:border-color .2s, transform .2s;
+  }
+  .industry-tile:hover{ border-color:var(--brass); transform:translateY(-3px); }
+  .industry-tile .ico{ font-size:1.6rem; margin-bottom:14px; display:block; }
+  .industry-tile h4{ font-size:1rem; color:var(--chart); margin-bottom:6px; }
+  .industry-tile p{ font-size:0.84rem; color:var(--text-muted); }
+
+  /* ---------- why us / credentials ---------- */
+  .why-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;
+  }
+  @media (max-width:860px){ .why-grid{ grid-template-columns:1fr; gap:40px; } }
+  .why-list{ display:flex; flex-direction:column; gap:26px; }
+  .why-item{ display:flex; gap:18px; }
+  .why-item .mark{
+    width:40px; height:40px; flex-shrink:0; border-radius:50%;
+    border:1px solid var(--brass); display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace; font-size:0.78rem; color:var(--brass-bright);
+  }
+  .why-item h4{ font-size:1.02rem; color:var(--chart); margin-bottom:4px; }
+  .why-item p{ font-size:0.88rem; color:var(--text-muted); }
+
+  .cert-panel{
+    background:var(--navy-light); border:1px solid rgba(184,147,90,0.22);
+    border-radius:4px; padding:32px;
+  }
+  .cert-panel .mono{ font-size:0.72rem; color:var(--brass-bright); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:20px; display:block; }
+  .cert-list{ display:grid; grid-template-columns:1fr 1fr; gap:14px 10px; }
+  .cert-list div{
+    font-size:0.85rem; color:var(--text-on-navy); padding:10px 12px;
+    border:1px solid rgba(233,226,208,0.14); border-radius:2px;
+  }
+
+  /* ---------- testimonial ---------- */
+  .quote-block{
+    border-left:2px solid var(--brass);
+    padding-left:32px; max-width:760px;
+  }
+  .quote-block p{ font-family:'Fraunces', serif; font-size:1.5rem; font-weight:400; font-style:italic; color:var(--navy); line-height:1.45; }
+  .quote-block .attrib{ margin-top:22px; font-size:0.88rem; color:#5a5346; font-family:'Work Sans', sans-serif; font-style:normal; }
+  .quote-block .attrib b{ color:var(--navy); }
+
+  /* ---------- contact ---------- */
+  .contact-wrap{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px;
+  }
+  @media (max-width:860px){ .contact-wrap{ grid-template-columns:1fr; } }
+  .contact-info h2{ font-size:clamp(1.9rem,3vw,2.4rem); color:var(--chart); margin-bottom:18px; }
+  .contact-info p{ color:var(--text-muted); margin-bottom:30px; max-width:420px; }
+  .contact-detail{ display:flex; gap:14px; margin-bottom:18px; align-items:flex-start; }
+  .contact-detail .lbl{ font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--brass-bright); text-transform:uppercase; letter-spacing:0.08em; width:90px; flex-shrink:0; padding-top:2px; }
+  .contact-detail .val{ font-size:0.94rem; color:var(--text-on-navy); }
+
+  form{ display:flex; flex-direction:column; gap:18px; }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:560px){ .form-row{ grid-template-columns:1fr; } }
+  label{ font-size:0.78rem; font-family:'JetBrains Mono', monospace; color:var(--brass-bright); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; display:block; }
+  input, textarea, select{
+    width:100%; background:var(--navy-deep); border:1px solid rgba(184,147,90,0.28);
+    color:var(--text-on-navy); padding:13px 14px; border-radius:2px; font-family:'Work Sans', sans-serif; font-size:0.94rem;
+  }
+  input::placeholder, textarea::placeholder{ color:#5f7385; }
+  textarea{ resize:vertical; min-height:110px; }
+  .field{ display:flex; flex-direction:column; }
+  .submit-btn{
+    align-self:flex-start; margin-top:8px;
+    background:var(--rust); color:#fff8ef; padding:15px 32px;
+    border:1px solid var(--rust-bright); border-radius:2px; font-weight:500; font-size:0.96rem;
+    cursor:pointer; transition:background .2s;
+  }
+  .submit-btn:hover{ background:var(--rust-bright); }
+  .form-note{ font-size:0.78rem; color:#5f7385; margin-top:2px; }
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid rgba(184,147,90,0.18);
+    padding:48px 0 32px;
+  }
+  .footer-inner{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;
+    font-size:0.84rem; color:var(--text-muted);
+  }
+  .footer-links{ display:flex; gap:26px; flex-wrap:wrap; }
+  .footer-links a:hover{ color:var(--chart); }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .eyebrow .dot{ animation:none; }
+    #ship-dot{ animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" fill="none">
+        <path d="M4 22 L16 6 L28 22" stroke="#d4ad74" stroke-width="1.6" fill="none"/>
+        <circle cx="16" cy="6" r="2.2" fill="#d4ad74"/>
+        <circle cx="4" cy="22" r="2.2" fill="#a8452f"/>
+        <circle cx="28" cy="22" r="2.2" fill="#a8452f"/>
+      </svg>
+      <span>Meridian Trade Co.</span>
+    </div>
+    <div class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#industries">Industries</a>
+      <a href="#why">Why Us</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Request a Quote</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Import &amp; Export Since 2009</div>
+      <h1>Global sourcing, <em>delivered</em> to every port.</h1>
+      <p class="lede">Meridian Trade Co. moves goods across 40+ countries — sourcing, freight, customs, and compliance handled end to end, so your cargo clears the dock and not your calendar.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Request a Quote</a>
+        <a href="#services" class="btn-secondary">Explore Services</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><b>42</b><span>Countries served</span></div>
+        <div class="hstat"><b>3,800+</b><span>Shipments / year</span></div>
+        <div class="hstat"><b>99.2%</b><span>On-time customs clearance</span></div>
+      </div>
+    </div>
+
+    <div class="route-card">
+      <div class="route-card-head">
+        <h4>Active Trade Lane</h4>
+        <span class="mono">SHA → RTM · VESSEL MSC-ARIA</span>
+      </div>
+      <svg class="route-svg" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- lat/long grid -->
+        <g stroke="#d9cfb4" stroke-width="1">
+          <line x1="0" y1="40" x2="420" y2="40"/>
+          <line x1="0" y1="90" x2="420" y2="90"/>
+          <line x1="0" y1="140" x2="420" y2="140"/>
+          <line x1="0" y1="190" x2="420" y2="190"/>
+          <line x1="70" y1="0" x2="70" y2="220"/>
+          <line x1="150" y1="0" x2="150" y2="220"/>
+          <line x1="230" y1="0" x2="230" y2="220"/>
+          <line x1="310" y1="0" x2="310" y2="220"/>
+          <line x1="390" y1="0" x2="390" y2="220"/>
+        </g>
+        <!-- route path -->
+        <path id="route-path" d="M40,170 C110,120 150,60 230,70 C300,78 340,50 385,45" stroke="#a8452f" stroke-width="2" fill="none" stroke-dasharray="5 5"/>
+        <!-- ports -->
+        <circle cx="40" cy="170" r="5" fill="#0f2438"/>
+        <text x="40" y="190" font-family="JetBrains Mono, monospace" font-size="9" fill="#0f2438" text-anchor="middle">SHA</text>
+        <circle cx="230" cy="70" r="4" fill="#3f6b6b"/>
+        <text x="230" y="58" font-family="JetBrains Mono, monospace" font-size="9" fill="#3f6b6b" text-anchor="middle">SIN</text>
+        <circle cx="385" cy="45" r="5" fill="#0f2438"/>
+        <text x="385" y="33" font-family="JetBrains Mono, monospace" font-size="9" fill="#0f2438" text-anchor="middle">RTM</text>
+        <!-- moving ship marker -->
+        <circle id="ship-dot" r="4.5" fill="#d4ad74">
+          <animateMotion dur="6s" repeatCount="indefinite" path="M40,170 C110,120 150,60 230,70 C300,78 340,50 385,45"/>
+        </circle>
+      </svg>
+      <div class="route-legend">
+        <span>ETD 14 AUG</span>
+        <span>TRANSIT 27 DAYS</span>
+        <span>ETA 10 SEP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What We Do</div>
+      <h2>Every link in the supply chain, under one manifest.</h2>
+      <p>From first sample to final-mile delivery, we handle the parts of import-export that usually mean six vendors and a spreadsheet of contacts.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="num mono">01</span>
+        <h3>Sourcing &amp; Procurement</h3>
+        <p>Vetted supplier networks across Asia, Europe, and Latin America, with factory audits and price benchmarking before you commit.</p>
+      </div>
+      <div class="service-card">
+        <span class="num mono">02</span>
+        <h3>Ocean &amp; Air Freight</h3>
+        <p>FCL, LCL, and air consolidation booked across our carrier partnerships, with live tracking from origin port to destination.</p>
+      </div>
+      <div class="service-card">
+        <span class="num mono">03</span>
+        <h3>Customs Clearance</h3>
+        <p>Licensed customs brokerage, tariff classification, and duty optimization in every jurisdiction we operate.</p>
+      </div>
+      <div class="service-card">
+        <span class="num mono">04</span>
+        <h3>Quality Assurance</h3>
+        <p>Pre-shipment inspection, third-party lab testing, and container loading supervision to catch problems before they ship.</p>
+      </div>
+      <div class="service-card">
+        <span class="num mono">05</span>
+        <h3>Warehousing &amp; Distribution</h3>
+        <p>Bonded and non-bonded storage with pick-pack-ship fulfillment at key hubs, so inventory sits closer to demand.</p>
+      </div>
+      <div class="service-card">
+        <span class="num mono">06</span>
+        <h3>Trade Finance &amp; Documentation</h3>
+        <p>Letters of credit, certificates of origin, insurance, and full compliance paperwork prepared and filed on your behalf.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="light-section">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" style="border-color:rgba(63,107,107,0.4); color:var(--teal);">How It Works</div>
+      <h2>One shipment, five checkpoints.</h2>
+      <p>A fixed sequence we run on every order, so nothing reaches a port without a paper trail behind it.</p>
+    </div>
+    <div class="process">
+      <div class="process-step">
+        <div class="step-num mono">01</div>
+        <div>
+          <span class="tag">Intake</span>
+          <h3>Quote &amp; sourcing brief</h3>
+          <p>You share product specs and volumes; we return supplier options, landed cost estimates, and a lead-time forecast within 48 hours.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num mono">02</div>
+        <div>
+          <span class="tag">Production</span>
+          <h3>Order placement &amp; inspection</h3>
+          <p>We place the PO, monitor production milestones, and schedule pre-shipment inspection before anything is packed for export.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num mono">03</div>
+        <div>
+          <span class="tag">Transit</span>
+          <h3>Booking &amp; freight</h3>
+          <p>Carrier booked, container loaded under supervision, and full documentation issued — bill of lading, packing list, certificate of origin.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num mono">04</div>
+        <div>
+          <span class="tag">Border</span>
+          <h3>Customs clearance</h3>
+          <p>Our brokers classify, declare, and clear the shipment at destination, handling duties and any inspections that arise.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num mono">05</div>
+        <div>
+          <span class="tag">Delivery</span>
+          <h3>Final-mile &amp; reconciliation</h3>
+          <p>Goods delivered to warehouse or end customer, with a closing report reconciling cost, timeline, and any variances against the original quote.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Sectors</div>
+      <h2>Industries we move goods for.</h2>
+      <p>Category-specific compliance and handling, not a one-size-fits-all container.</p>
+    </div>
+    <div class="industries-grid">
+      <div class="industry-tile"><span class="ico">🌾</span><h4>Agriculture &amp; Food</h4><p>Cold chain, phytosanitary certs, perishable routing.</p></div>
+      <div class="industry-tile"><span class="ico">⚙️</span><h4>Industrial Equipment</h4><p>Heavy machinery, oversized cargo, project logistics.</p></div>
+      <div class="industry-tile"><span class="ico">🧵</span><h4>Textiles &amp; Apparel</h4><p>Seasonal volume planning, quota and quality tracking.</p></div>
+      <div class="industry-tile"><span class="ico">🔩</span><h4>Metals &amp; Raw Materials</h4><p>Bulk and breakbulk shipping, commodity documentation.</p></div>
+      <div class="industry-tile"><span class="ico">💊</span><h4>Pharma &amp; Chemicals</h4><p>Regulated handling, hazmat certification, temp control.</p></div>
+      <div class="industry-tile"><span class="ico">🔌</span><h4>Electronics</h4><p>High-value cargo insurance, secure warehousing.</p></div>
+      <div class="industry-tile"><span class="ico">🛋️</span><h4>Furniture &amp; Home Goods</h4><p>FCL consolidation, white-glove final-mile delivery.</p></div>
+      <div class="industry-tile"><span class="ico">🚗</span><h4>Automotive Parts</h4><p>Just-in-time freight scheduling, tariff classification.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Why Meridian</div>
+      <h2>What you're actually hiring us for.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-list">
+        <div class="why-item">
+          <div class="mark">15+</div>
+          <div><h4>Years operating trade lanes</h4><p>Relationships with carriers and customs offices built since 2009, not a directory of contacts.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="mark">1</div>
+          <div><h4>Single point of contact</h4><p>One account manager owns your shipment from quote to delivery — no hand-offs between departments.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="mark">24/7</div>
+          <div><h4>Shipment visibility</h4><p>Live tracking portal and proactive alerts on any delay, before you have to ask.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="mark">✓</div>
+          <div><h4>Licensed &amp; bonded</h4><p>Fully licensed customs brokerage in every country we clear goods through.</p></div>
+        </div>
+      </div>
+      <div class="cert-panel">
+        <span class="mono">Licenses &amp; Memberships</span>
+        <div class="cert-list">
+          <div>FIATA Member</div>
+          <div>AEO Certified</div>
+          <div>C-TPAT Partner</div>
+          <div>ISO 9001:2015</div>
+          <div>IATA Cargo Agent</div>
+          <div>WCA Network</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="light-section">
+  <div class="wrap">
+    <div class="quote-block">
+      <p>"Meridian cut our customs clearance time nearly in half and caught a mislabeled HS code before it became a fine. That's the kind of thing you only notice when it stops happening."</p>
+      <div class="attrib"><b>Operations Director</b> — mid-size home goods importer, Rotterdam</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap contact-wrap">
+    <div class="contact-info">
+      <div class="eyebrow">Get In Touch</div>
+      <h2>Tell us what you're moving.</h2>
+      <p>Send your shipment details and we'll come back with a quote, a lead-time estimate, and the documents you'll need — usually within two business days.</p>
+      <div class="contact-detail"><span class="lbl">Email</span><span class="val">trade@meridiantradeco.com</span></div>
+      <div class="contact-detail"><span class="lbl">Phone</span><span class="val">+1 (212) 555-0148</span></div>
+      <div class="contact-detail"><span class="lbl">HQ</span><span class="val">14 Harbourview Plaza, Suite 900, New York, NY</span></div>
+      <div class="contact-detail"><span class="lbl">Hours</span><span class="val">Mon–Fri, 8:00–19:00 EST</span></div>
+    </div>
+    <form onsubmit="event.preventDefault(); document.getElementById('form-success').style.display='block'; this.reset();">
+      <div class="form-row">
+        <div class="field">
+          <label for="name">Full name</label>
+          <input id="name" type="text" placeholder="Jordan Lee" required>
+        </div>
+        <div class="field">
+          <label for="company">Company</label>
+          <input id="company" type="text" placeholder="Company name" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@company.com" required>
+        </div>
+        <div class="field">
+          <label for="goods">Goods type</label>
+          <select id="goods">
+            <option>Agriculture &amp; Food</option>
+            <option>Industrial Equipment</option>
+            <option>Textiles &amp; Apparel</option>
+            <option>Metals &amp; Raw Materials</option>
+            <option>Pharma &amp; Chemicals</option>
+            <option>Electronics</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="origin">Origin port / country</label>
+          <input id="origin" type="text" placeholder="e.g. Shanghai, CN">
+        </div>
+        <div class="field">
+          <label for="dest">Destination port / country</label>
+          <input id="dest" type="text" placeholder="e.g. Rotterdam, NL">
+        </div>
+      </div>
+      <div class="field">
+        <label for="details">Shipment details</label>
+        <textarea id="details" placeholder="Volume, frequency, target timeline, anything else we should know..."></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Request</button>
+      <p class="form-note" id="form-success" style="display:none; color:var(--brass-bright);">Request received — we'll follow up by email within 2 business days.</p>
+      <p class="form-note">This form is a static demo and does not currently send data anywhere.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 Meridian Trade Co. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#industries">Industries</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
